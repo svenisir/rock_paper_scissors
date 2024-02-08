@@ -41,7 +41,10 @@ logging_config = {
         }
     },
     'loggers': {
-
+        'bot': {
+            'level': 'DEBUG',
+            'handlers': ['stdout'] 
+        }
     },
     'root': {
         'formatter': 'formatter_2',
