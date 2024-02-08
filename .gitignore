@@ -6,3 +6,4 @@ __pycache__/
 critical.log
 warning.log
 error.log
+logging_settings
