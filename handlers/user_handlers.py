@@ -1,6 +1,4 @@
-import logging
-
-from aiogram import Router, F
+from aiogram import Bot, Router, F
 from aiogram.types import Message
 from aiogram.filters import Command, CommandStart
 from lexicon.lexicon import LEXICON_RU
@@ -12,7 +10,6 @@ router = Router()
 
 @router.message(CommandStart())
 async def process_start_command(message: Message):
-    logging.warning('Start command')
     await message.answer(
         text=LEXICON_RU['/start'],
         reply_markup=get_invite_kb()
@@ -21,16 +18,20 @@ async def process_start_command(message: Message):
 
 @router.message(Command(commands=['help']))
 async def process_help_command(message: Message):
-    logging.warning('Help command')
     await message.answer(
         text=LEXICON_RU['/help'],
         reply_markup=get_invite_kb()
     )
 
 
+@router.message(Command(commands=['delmenu']))
+async def process_help_command(message: Message, bot: Bot):
+    await bot.delete_my_commands()
+    await message.answer(text=LEXICON_RU['del_menu_button'])
+
+
 @router.message(F.text == LEXICON_RU['yes_button'])
 async def process_yes_answer(message: Message):
-    logging.warning('Start game')
     await message.answer(
         text=LEXICON_RU['yes'],
         reply_markup=get_game_kb()
